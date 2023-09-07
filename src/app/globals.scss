@@ -1,0 +1,29 @@
+@import "styles/reset";
+@import "styles/list";
+@import "styles/form";
+@import "styles/custom-field";
+@import "styles/popup";
+
+:root {
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+}
+
+.container {
+  width: 100%;
+  max-width: 1024px;
+  margin: 30px auto;
+}
