@@ -17,6 +17,7 @@ import Image from 'next/image';
 
 import showImg from '../../../public/images/visible.png';
 import hideImg from '../../../public/images/not-invisible.png';
+import {Spinner} from '@/components/Spinner/Spinner';
 
 type DataDto = {
   list: VocabularyItem[],
@@ -40,49 +41,51 @@ export const VocabularyList = () => {
   }, [data?.list, existWordId]);
 
 
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
-
   return (
     <>
-      <div className="container">
-        <div className="button-container">
-          <button
-            type="button"
-            onClick={() => setVisible(!isVisible)}
-            className="button-visible-col"
-            title="Show/Hide translate column"
-          >
-            <Image
-              src={isVisible ? hideImg.src : showImg.src}
-              alt="Image"
-              width={28}
-              height={28}
-            />
-          </button>
-        </div>
+      {
+        isLoading ? (
+            <Spinner />
+          ) : (
+            <div className="container">
+            <div className="button-container">
+              <button
+                type="button"
+                onClick={() => setVisible(!isVisible)}
+                className="button-visible-col"
+                title="Show/Hide translate column"
+              >
+                <Image
+                  src={isVisible ? hideImg.src : showImg.src}
+                  alt="Image"
+                  width={28}
+                  height={28}
+                />
+              </button>
+            </div>
 
-        <ul className="list">
-          {
-            data?.list.map(item => (
-              <Fragment key={item._id}>
-                <li className="list-item item-word">
-                  { item.word }
-                </li>
+            <ul className="list">
+              {
+                data?.list.map(item => (
+                  <Fragment key={item._id}>
+                    <li className="list-item item-word">
+                      { item.word }
+                    </li>
 
-                <li className="list-item">
-                  { item.transcription || ' - ' }
-                </li>
+                    <li className="list-item">
+                      { item.transcription || ' - ' }
+                    </li>
 
-                <li className={isVisible ? 'list-item item-translate hide-item' : 'list-item item-translate'}>
-                  { item.translate }
-                </li>
-              </Fragment>
-            ))
-          }
-        </ul>
-      </div>
+                    <li className={isVisible ? 'list-item item-translate hide-item' : 'list-item item-translate'}>
+                      { item.translate }
+                    </li>
+                  </Fragment>
+                ))
+              }
+            </ul>
+          </div>
+        )
+      }
 
       {
         open && <Popup setOpen={setOpen} data={existWord} />

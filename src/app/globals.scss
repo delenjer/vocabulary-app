@@ -3,6 +3,7 @@
 @import "styles/form";
 @import "styles/custom-field";
 @import "styles/popup";
+@import "styles/spinner";
 
 :root {
 }
@@ -20,6 +21,8 @@ body {
 }
 
 .main {
+  position: relative;
+  min-height: 100vh;
   background-color: forestgreen;
   padding: 30px 16px;
 }
@@ -27,5 +30,6 @@ body {
 .container {
   width: 100%;
   max-width: 1024px;
+  min-height: 100vh;
   margin: 30px auto 0;
 }
