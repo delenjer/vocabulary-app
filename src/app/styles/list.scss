@@ -17,5 +17,13 @@
   opacity: 0;
 }
 
-.item-btn {
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-visible-col {
+  border: 0;
+  background-color: initial;
+  cursor: pointer;
 }

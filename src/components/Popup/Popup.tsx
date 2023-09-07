@@ -16,6 +16,7 @@ export const Popup:FC<PopupProps> = memo(({ setOpen, data }) => {
       return;
     }
 
+    localStorage.removeItem('existWordId');
     setOpen(false);
   }
 
@@ -25,11 +26,12 @@ export const Popup:FC<PopupProps> = memo(({ setOpen, data }) => {
       onClick={handleClick}
     >
       <div className="popup-wrapper">
-        <h3>This word is exist!</h3>
+        <h3 className="popup-title">This word is exist!</h3>
 
-        <ul>
-          <li>{ data?.word }</li>
-          <li>{ data?.translate }</li>
+        <ul className="popup-body">
+          <li className="popup-item">{ data?.word }</li>
+          <li className="popup-separate">-</li>
+          <li className="popup-item">{ data?.translate }</li>
         </ul>
       </div>
     </div>

@@ -19,11 +19,13 @@ body {
   overflow-x: hidden;
 }
 
-body {
+.main {
+  background-color: forestgreen;
+  padding: 30px 16px;
 }
 
 .container {
   width: 100%;
   max-width: 1024px;
-  margin: 30px auto;
+  margin: 30px auto 0;
 }

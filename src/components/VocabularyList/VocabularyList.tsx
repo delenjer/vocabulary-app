@@ -13,6 +13,10 @@ import {getVocabularyList} from '@/app/api/api/api';
 import {VocabularyItem} from '@/models/models';
 import {store} from '@/utils/storageStore/storageStore';
 import {Popup} from '@/components/Popup/Popup';
+import Image from 'next/image';
+
+import showImg from '../../../public/images/visible.png';
+import hideImg from '../../../public/images/not-invisible.png';
 
 type DataDto = {
   list: VocabularyItem[],
@@ -40,17 +44,24 @@ export const VocabularyList = () => {
     return <p>Loading...</p>
   }
 
-
   return (
     <>
       <div className="container">
-        <button
-          type="button"
-          onClick={() => setVisible(!isVisible)}
-          className="item-btn"
-        >
-          {isVisible ? 'Show col' : 'Hide col'}
-        </button>
+        <div className="button-container">
+          <button
+            type="button"
+            onClick={() => setVisible(!isVisible)}
+            className="button-visible-col"
+            title="Show/Hide translate column"
+          >
+            <Image
+              src={isVisible ? hideImg.src : showImg.src}
+              alt="Image"
+              width={28}
+              height={28}
+            />
+          </button>
+        </div>
 
         <ul className="list">
           {
@@ -61,7 +72,7 @@ export const VocabularyList = () => {
                 </li>
 
                 <li className="list-item">
-                  { item.transcription ?? ' - ' }
+                  { item.transcription || ' - ' }
                 </li>
 
                 <li className={isVisible ? 'list-item item-translate hide-item' : 'list-item item-translate'}>
