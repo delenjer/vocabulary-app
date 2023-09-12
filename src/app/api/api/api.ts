@@ -21,12 +21,10 @@ export const getVocabularyList = async () => {
       return [];
     }
 
-    return res.json();
+    return res.json().then(data => data);
 
   } catch (error) {
     console.log("Error loading topics: ", error);
-
-    return [];
   }
 };
 
@@ -39,3 +37,14 @@ export const researchWord = ({ word }:Pick<WordsDto, 'word'>) => {
     body: JSON.stringify({ word }),
   }).then(res => res.json());
 }
+
+export const deleteWord = (id: { _id: string }) => {
+  return fetch("/api/delete-word", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(id),
+  }).then(res => res.json());
+}
+

@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
 
-export async function POST(req:any) {
+export async function POST(req: NextRequest) {
   try {
     const { word, translate, transcription } = await req.json();
 
@@ -10,6 +10,7 @@ export async function POST(req:any) {
     await Vocabulary.create({ word, translate, transcription });
 
     return NextResponse.json({ message: "User registered." }, { status: 201 });
+
   } catch (error) {
     return NextResponse.json(
       { message: "An error occurred while registering the user." },

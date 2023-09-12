@@ -16,9 +16,7 @@ export const AddWords = () => {
 
   const mutation = useMutation({
     mutationFn: (newWords:WordsDto) => addWord(newWords),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['words'] })
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['words'] }),
   });
 
   return (

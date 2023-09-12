@@ -18,6 +18,7 @@ import Image from 'next/image';
 import showImg from '../../../public/images/visible.png';
 import hideImg from '../../../public/images/not-invisible.png';
 import {Spinner} from '@/components/Spinner/Spinner';
+import {DeleteWord} from '@/components/VocabularyList/DeleteWord/DeleteWord';
 
 type DataDto = {
   list: VocabularyItem[],
@@ -34,12 +35,11 @@ export const VocabularyList = () => {
   }, [existWordId]);
 
 
-  const { data, isLoading } = useQuery<DataDto, boolean>({ queryKey: ['words'], queryFn: getVocabularyList });
+  const { data, isLoading } = useQuery<DataDto>({ queryKey: ['words'], queryFn: getVocabularyList });
 
   const existWord = useMemo(() => {
-    return data?.list.find(word => existWordId?.includes(word._id))
+    return data?.list?.find(word => existWordId?.includes(word._id))
   }, [data?.list, existWordId]);
-
 
   return (
     <>
@@ -66,7 +66,7 @@ export const VocabularyList = () => {
 
             <ul className="list">
               {
-                data?.list.map(item => (
+                data?.list?.map(item => (
                   <Fragment key={item._id}>
                     <li className="list-item item-word">
                       { item.word }
@@ -77,7 +77,11 @@ export const VocabularyList = () => {
                     </li>
 
                     <li className={isVisible ? 'list-item item-translate hide-item' : 'list-item item-translate'}>
-                      { item.translate }
+                      <span>
+                        { item.translate }
+                      </span>
+
+                      <DeleteWord itemId={item._id} />
                     </li>
                   </Fragment>
                 ))
