@@ -1,4 +1,5 @@
 @import "styles/reset";
+@import "styles/fonts";
 @import "styles/list";
 @import "styles/form";
 @import "styles/custom-field";
@@ -12,6 +13,20 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 5px;
+  }
 }
 
 html,
@@ -20,16 +35,38 @@ body {
   overflow-x: hidden;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+}
+
 .main {
   position: relative;
   min-height: 100vh;
-  background-color: forestgreen;
   padding: 30px 16px;
+  background: url("/images/bg.webp") no-repeat center;
+  background-size: cover;
 }
 
 .container {
   width: 100%;
   max-width: 1024px;
-  min-height: 100vh;
   margin: 30px auto 0;
+  padding: 1px;
+  border-radius: 12px ;
+  background: linear-gradient(147.67deg, #0190f9 0%, rgba(1, 144, 249, 0.00376036) 82.07%);
+}
+
+.container-wrap {
+  max-height: 700px;
+  background-color: #040925;
+  border-radius: inherit;
+  padding: 14px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

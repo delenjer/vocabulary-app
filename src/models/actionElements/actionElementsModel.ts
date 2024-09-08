@@ -4,4 +4,5 @@ export interface Field {
   name?: string;
   placeholder?: string;
   wrapperClass?: string,
+  error?: boolean,
 }
