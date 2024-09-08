@@ -11,10 +11,12 @@ import {UseMutateFunction} from '@tanstack/react-query';
 import {researchWord} from '@/app/api/api/api';
 import {existWordState} from '@/utils/storageStore/storageStore';
 import {schema} from '@/components/AddWords/Form/validationShema';
+import {
+  useMutation,
+  useQueryClient
+} from '@tanstack/react-query';
 
-type FormProps = {
-  mutationHandle: UseMutateFunction<Response, unknown, WordsDto>,
-};
+import {addWord} from '@/app/api/api/api';
 
 type FormData = {
   wordField: string,
@@ -22,8 +24,15 @@ type FormData = {
   translateField: string,
 };
 
-export const Form:FC<FormProps> = ({ mutationHandle }) => {
+export const Form = () => {
   const [isShow, setShow] = useState(false);
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (newWords:WordsDto) => addWord(newWords),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['words'] }),
+  });
 
   const { handleSubmit, control, reset, formState: { errors } } = useForm<FormData>({
     defaultValues: {
@@ -47,7 +56,7 @@ export const Form:FC<FormProps> = ({ mutationHandle }) => {
 
 
     if (data.wordField && data.translateField) {
-      mutationHandle({
+      mutation.mutate({
         word: data.wordField,
         translate: data.translateField,
         transcription: data.transcriptionField,

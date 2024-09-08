@@ -82,7 +82,7 @@ export const VocabularyList = () => {
                           { item.translate }
                         </span>
 
-                          {/* <DeleteWord itemId={item._id} /> */}
+                          <DeleteWord itemId={item._id} />
                         </li>
                       </Fragment>
                     ))
