@@ -40,7 +40,6 @@ export const Form = () => {
       transcriptionField: '',
       translateField: '',
     },
-    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data:FormValues) => {
