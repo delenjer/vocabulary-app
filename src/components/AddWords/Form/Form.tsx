@@ -20,7 +20,7 @@ import {addWord} from '@/app/api/api/api';
 
 type FormData = {
   wordField: string,
-  transcriptionField: string,
+  transcriptionField?: string,
   translateField: string,
 };
 
@@ -44,7 +44,7 @@ export const Form = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data:FormValues) => {
+  const onSubmit = async (data:FormData) => {
     const { existWordId } = await researchWord({ word: data.wordField });
     let newData:WordsDto = {
       word: data.wordField,
@@ -58,8 +58,6 @@ export const Form = () => {
     }
 
     localStorage.removeItem("existWordId");
-
-    //transcription: data.transcriptionField,
 
     if (data.transcriptionField) {
       newData.transcription = data.transcriptionField
