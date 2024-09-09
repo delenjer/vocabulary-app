@@ -40,10 +40,16 @@ export const Form = () => {
       transcriptionField: '',
       translateField: '',
     },
+
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data:FormValues) => {
     const { existWordId } = await researchWord({ word: data.wordField });
+    let newData:WordsDto = {
+      word: data.wordField,
+      translate: data.translateField,
+    }
 
     if (existWordId) {
       existWordState(existWordId._id);
@@ -53,13 +59,15 @@ export const Form = () => {
 
     localStorage.removeItem("existWordId");
 
+    //transcription: data.transcriptionField,
+
+    if (data.transcriptionField) {
+      newData.transcription = data.transcriptionField
+    }
+
 
     if (data.wordField && data.translateField) {
-      mutation.mutate({
-        word: data.wordField,
-        translate: data.translateField,
-        transcription: data.transcriptionField,
-      });
+      mutation.mutate(newData);
     }
 
     reset();
