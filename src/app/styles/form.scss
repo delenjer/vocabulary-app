@@ -41,3 +41,11 @@
     margin-right: 10px;
   }
 }
+
+@media (max-width: 768px) {
+  .item-translate {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 10px;
+  }
+}

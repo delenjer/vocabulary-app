@@ -1,13 +1,24 @@
+import { SortOrder } from 'mongoose';
 import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
+import { IVocabulary } from '../../../models/models';
+
+type FilterParam = Partial<Record<keyof IVocabulary, any>>;
+type SortParams = Partial<Record<keyof IVocabulary, SortOrder>>;
+
+const filterData = (
+  data: typeof Vocabulary, 
+  filterParam: FilterParam, 
+  sortParams: SortParams
+) => data.find({ ...filterParam }).sort({ ...sortParams });
 
 export async function POST(req: NextRequest) {
   try {
-    const { word, translate, transcription } = await req.json();
+    const data = await req.json();
 
     await connectMongoDB();
-    await Vocabulary.create({ word, translate, transcription });
+    await Vocabulary.create({ ...data });
 
     return NextResponse.json({ message: "User registered." }, { status: 201 });
 
@@ -19,9 +30,17 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+
+  const { searchParams } = new URL(req.url);
+  const word = searchParams.get('word');
+  const getDataParams = word === 'new' ? filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) : filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
+
   await connectMongoDB();
-  const list = await Vocabulary.find().sort({ updatedAt: -1 });
+
+  const list = await getDataParams;
+
+  // const list = await Vocabulary.find().sort({ updatedAt: -1 });
 
   return NextResponse.json({ list });
 }

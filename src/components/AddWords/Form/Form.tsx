@@ -17,11 +17,13 @@ import {
 } from '@tanstack/react-query';
 
 import {addWord} from '@/app/api/api/api';
+import { log } from 'console';
 
 type FormData = {
   wordField: string,
   transcriptionField?: string,
   translateField: string,
+  lable: string
 };
 
 export const Form = () => {
@@ -49,6 +51,7 @@ export const Form = () => {
     let newData:WordsDto = {
       word: data.wordField,
       translate: data.translateField,
+      lable: 'new',
     }
 
     if (existWordId) {
@@ -65,6 +68,8 @@ export const Form = () => {
 
 
     if (data.wordField && data.translateField) {
+        console.log(newData, 'newData')
+
       mutation.mutate(newData);
     }
 

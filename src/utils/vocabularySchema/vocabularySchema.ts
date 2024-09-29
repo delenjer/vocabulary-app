@@ -13,6 +13,9 @@ const vocabularySchema = new Schema(
     transcription: {
       type: String,
     },
+    lable: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

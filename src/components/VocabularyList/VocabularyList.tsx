@@ -19,6 +19,7 @@ import showImg from '../../../public/images/visible.png';
 import hideImg from '../../../public/images/not-invisible.png';
 import {Spinner} from '@/components/Spinner/Spinner';
 import {DeleteWord} from '@/components/VocabularyList/DeleteWord/DeleteWord';
+import { log } from 'console';
 
 type DataDto = {
   list: VocabularyItem[],
@@ -27,15 +28,19 @@ type DataDto = {
 export const VocabularyList = () => {
   const [ isVisible, setVisible ] = useState(false);
   const [ open, setOpen ] = useState(false);
+  const [checked, setChecked] = useState<boolean>(true);
 
   const existWordId = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
+  let toggleKeyWord = checked ? 'new' : 'all';
 
   useEffect(() => {
     setOpen(!!existWordId);
   }, [existWordId]);
 
-
-  const { data, isLoading } = useQuery<DataDto>({ queryKey: ['words'], queryFn: getVocabularyList });
+  const { data, isLoading } = useQuery<DataDto>({
+    queryKey: ['words', toggleKeyWord],
+    queryFn : () => getVocabularyList(toggleKeyWord),
+  });
 
   const existWord = useMemo(() => {
     return data?.list?.find(word => existWordId?.includes(word._id))
@@ -50,6 +55,8 @@ export const VocabularyList = () => {
             <div className="container">
               <div className="container-wrap">
                 <div className="button-container">
+                  <input checked={checked} type="checkbox" onChange={() => setChecked(!checked)} />
+
                   <button
                     type="button"
                     onClick={() => setVisible(!isVisible)}
@@ -68,23 +75,23 @@ export const VocabularyList = () => {
                 <ul className="list">
                   {
                     data?.list?.map(item => (
-                      <Fragment key={item._id}>
-                        <li className="list-item item-word">
+                      <li className="list-item" key={item._id}>
+                        <span className="list-item__content item-word">
                           { item.word }
-                        </li>
+                        </span>
 
-                        <li className="list-item item-transcription">
+                        <span className="list-item__content item-transcription">
                           { item.transcription || ' - ' }
-                        </li>
+                        </span>
 
-                        <li className={isVisible ? 'list-item item-translate hide-item' : 'list-item item-translate'}>
+                        <span className={isVisible ? 'list-item__content item-translate hide-item' : 'list-item__content item-translate'}>
                         <span>
                           { item.translate }
                         </span>
 
                           <DeleteWord itemId={item._id} />
-                        </li>
-                      </Fragment>
+                        </span>
+                      </li>
                     ))
                   }
                 </ul>

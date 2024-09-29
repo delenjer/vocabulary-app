@@ -9,6 +9,7 @@ export interface WordsDto {
   word: string;
   translate: string;
   transcription?: string;
+  lable: string;
 }
 
 export interface VocabularyItem extends WordsDto {
