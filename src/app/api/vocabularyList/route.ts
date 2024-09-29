@@ -2,8 +2,15 @@ import { SortOrder } from 'mongoose';
 import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
-//@ts-ignore
-import {IVocabulary} from '@/models/models';
+
+export interface IVocabulary extends Document {
+  word: string;
+  translate: string;
+  transcription?: string;
+  lable?: string;
+  createdAt: Date;
+  updatedAt: Date;  
+}
 
 type FilterParam = Partial<Record<keyof IVocabulary, any>>;
 type SortParams = Partial<Record<keyof IVocabulary, SortOrder>>;
