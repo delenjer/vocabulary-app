@@ -2,6 +2,7 @@ import { SortOrder } from 'mongoose';
 import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
+//@ts-ignore
 import {IVocabulary} from '@/models/models';
 
 type FilterParam = Partial<Record<keyof IVocabulary, any>>;
