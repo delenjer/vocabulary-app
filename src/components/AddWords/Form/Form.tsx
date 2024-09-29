@@ -23,7 +23,7 @@ type FormData = {
   wordField: string,
   transcriptionField?: string,
   translateField: string,
-  lable: string
+  lable?: string
 };
 
 export const Form = () => {
@@ -43,6 +43,7 @@ export const Form = () => {
       translateField: '',
     },
 
+    //@ts-ignore
     resolver: yupResolver(schema),
   });
 

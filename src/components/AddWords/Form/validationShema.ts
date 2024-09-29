@@ -5,7 +5,6 @@ export const schema = yup.object().shape({
     .matches(/^[a-zA-Z]+$/, 'Field must contain only English letters')
     .required('Field is required'),
   transcriptionField: yup.string().notRequired(),
-  lable: yup.string().notRequired(),
   translateField: yup.string()
     .matches(/[а-яА-Я]/, 'Field must contain only Ukrainian letters')
     .required('Translation is required'),
