@@ -2,7 +2,7 @@ import { SortOrder } from 'mongoose';
 import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
-import { IVocabulary } from '../../../models/models';
+import { IVocabulary } from '@/models/models';
 
 type FilterParam = Partial<Record<keyof IVocabulary, any>>;
 type SortParams = Partial<Record<keyof IVocabulary, SortOrder>>;
@@ -34,7 +34,9 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const word = searchParams.get('word');
-  const getDataParams = word === 'new' ? filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) : filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
+  const getDataParams = word === 'new' ?
+  filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
+  filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
 
   await connectMongoDB();
 
