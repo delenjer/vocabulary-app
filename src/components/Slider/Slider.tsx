@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 
 import {VocabularyItem} from '@/models/models';
 import { SliderControl } from "./SliderControl";
+import { DeleteWord } from "../VocabularyList/DeleteWord/DeleteWord";
 
 type ListDto = {
   data?: VocabularyItem[],
@@ -55,6 +56,8 @@ export const Slider:FC<ListDto> = ({ data }) => {
               text={'Next'}
               handleClickDirection={(event) => handleClickNext(event, i)}
             />
+
+            <DeleteWord itemId={item._id} />
 					</div>
 				))
 			}
