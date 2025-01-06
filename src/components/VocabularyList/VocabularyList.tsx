@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Fragment,
   useState,
   useSyncExternalStore,
   useEffect,
@@ -18,8 +17,8 @@ import Image from 'next/image';
 import showImg from '../../../public/images/visible.png';
 import hideImg from '../../../public/images/not-invisible.png';
 import {Spinner} from '@/components/Spinner/Spinner';
-import {DeleteWord} from '@/components/VocabularyList/DeleteWord/DeleteWord';
-import { log } from 'console';
+import { Slider } from '../Slider/Slider';
+
 
 type DataDto = {
   list: VocabularyItem[],
@@ -72,29 +71,7 @@ export const VocabularyList = () => {
                   </button>
                 </div>
 
-                <ul className="list">
-                  {
-                    data?.list?.map(item => (
-                      <li className="list-item" key={item._id}>
-                        <span className="list-item__content item-word">
-                          { item.word }
-                        </span>
-
-                        <span className="list-item__content item-transcription">
-                          { item.transcription || ' - ' }
-                        </span>
-
-                        <span className={isVisible ? 'list-item__content item-translate hide-item' : 'list-item__content item-translate'}>
-                        <span>
-                          { item.translate }
-                        </span>
-
-                          <DeleteWord itemId={item._id} />
-                        </span>
-                      </li>
-                    ))
-                  }
-                </ul>
+                <Slider key={toggleKeyWord} data={data?.list} />
               </div>
             </div>
         )

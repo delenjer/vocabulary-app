@@ -1,0 +1,50 @@
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    min-height: 100px;
+    // background-color: #000;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 20px;
+
+    @media (max-width: 768px) {
+        padding: 10px; 
+    }
+  
+    &__item {
+      text-align: center;
+    }
+  
+    .hide {
+      display: none;
+    }
+
+    &__text {
+        font-size: 32px;
+        letter-spacing: 0.05em;
+        text-transform: capitalize;
+        margin-block: 18px;
+
+        &--translate {
+            font-size: 24px;
+        }
+
+        &--transcription {
+            font-size: 18px;
+        }
+    }
+
+    &__control {
+        display: inline-block;
+        border: 0;
+        border-radius: 10px;
+        padding-inline: 20px;
+        padding-block: 12px;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 16px;
+        }
+    }
+  }
