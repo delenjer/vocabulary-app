@@ -48,16 +48,14 @@
         }
     }
 
+    &__action {
+      margin-block: 30px;
+    }
+
     .delete-btn {
-      position: absolute;
-      inset-inline-end: 0;
-      inset-block-start: 0;
+      position: relative;
       width: 24px;
       height: 24px;
-
-      @media (max-width: 768px) {
-        inset-inline-start: 0;
-    }
 
       &:after {
         content: "";

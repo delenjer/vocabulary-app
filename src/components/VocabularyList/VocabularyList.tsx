@@ -14,8 +14,8 @@ import {store} from '@/utils/storageStore/storageStore';
 import {Popup} from '@/components/Popup/Popup';
 import Image from 'next/image';
 
-import showImg from '../../../public/images/visible.png';
-import hideImg from '../../../public/images/not-invisible.png';
+import showImg from '../../../public/images/eye.svg';
+import hideImg from '../../../public/images/eye-crossed.svg';
 import {Spinner} from '@/components/Spinner/Spinner';
 import { Slider } from '../Slider/Slider';
 
@@ -25,7 +25,7 @@ type DataDto = {
 }
 
 export const VocabularyList = () => {
-  const [ isVisible, setVisible ] = useState(false);
+  const [ isVisible, setVisible ] = useState(true);
   const [ open, setOpen ] = useState(false);
   const [checked, setChecked] = useState<boolean>(true);
 
@@ -45,6 +45,8 @@ export const VocabularyList = () => {
     return data?.list?.find(word => existWordId?.includes(word._id))
   }, [data?.list, existWordId]);
 
+  console.log(isVisible, 'in list');
+
   return (
     <>
       {
@@ -63,7 +65,7 @@ export const VocabularyList = () => {
                     title="Show/Hide translate column"
                   >
                     <Image
-                      src={isVisible ? hideImg.src : showImg.src}
+                      src={isVisible ? showImg.src : hideImg.src}
                       alt="Image"
                       width={28}
                       height={28}
@@ -71,7 +73,7 @@ export const VocabularyList = () => {
                   </button>
                 </div>
 
-                <Slider key={toggleKeyWord} data={data?.list} />
+                <Slider key={toggleKeyWord} data={data?.list} isVisible={isVisible} />
               </div>
             </div>
         )

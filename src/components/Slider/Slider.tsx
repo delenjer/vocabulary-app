@@ -6,9 +6,10 @@ import { DeleteWord } from "../VocabularyList/DeleteWord/DeleteWord";
 
 type ListDto = {
   data?: VocabularyItem[],
+  isVisible: boolean,
 }
 
-export const Slider:FC<ListDto> = ({ data }) => {
+export const Slider:FC<ListDto> = ({ data, isVisible }) => {
     const [indexElement, setIndexElement] = useState<number>(0);
 
     const lastIndexElement: number = data && data.length - 1 || 0;
@@ -31,36 +32,45 @@ export const Slider:FC<ListDto> = ({ data }) => {
       setIndexElement(isToFirst ? lastIndexElement : counter);
     }
 
+    console.log(isVisible, 'in slider');
+
     return (
-        <div className="slider">
-			{
-				data && data.map((item, i) => (
-					<div
-            key={item._id}
-            className={indexElement === i ? 'slider__item' : 'hide'}
-          >
-						<p className="slider__text">{ item.word }</p>
+      <div className="slider">
+        {
+          data && data.map((item, i) => (
+            <div
+              key={item._id}
+              className={indexElement === i ? 'slider__item' : 'hide'}
+            >
+              <p className="slider__text">{ item.word }</p>
 
-            <span className="slider__text slider__text--transcription">
-              [ {item.transcription || ' - '} ]
-            </span>
+              <span className="slider__text slider__text--transcription">
+                [ {item.transcription || ' - '} ]
+              </span>
 
-						<p className="slider__text slider__text--translate">{ item.translate }</p>
+              {
+                isVisible &&
+                  <p className="slider__text slider__text--translate">
+                      { item.translate }
+                  </p> 
+              }
 
-            <SliderControl
-              text={'Prev'}
-              handleClickDirection={(event) => handleClickPrev(event, i - 1)}
-            />
+              <div className="slider__action">
+                <DeleteWord itemId={item._id} />
+              </div>
 
-            <SliderControl
-              text={'Next'}
-              handleClickDirection={(event) => handleClickNext(event, i)}
-            />
+              <SliderControl
+                text={'Prev'}
+                handleClickDirection={(event) => handleClickPrev(event, i - 1)}
+              />
 
-            <DeleteWord itemId={item._id} />
-					</div>
-				))
-			}
-		</div>
+              <SliderControl
+                text={'Next'}
+                handleClickDirection={(event) => handleClickNext(event, i)}
+              />
+            </div>
+          ))
+        }
+		  </div>
     );
 }
