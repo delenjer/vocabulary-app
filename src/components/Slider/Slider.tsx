@@ -3,13 +3,14 @@ import React, { FC, useState } from "react";
 import {VocabularyItem} from '@/models/models';
 import { SliderControl } from "./SliderControl";
 import { DeleteWord } from "../VocabularyList/DeleteWord/DeleteWord";
+import { toggleVisibleType } from "../VocabularyList/VocabularyList";
 
 type ListDto = {
   data?: VocabularyItem[],
-  isVisible: boolean,
+  toggleVisible: toggleVisibleType,
 }
 
-export const Slider:FC<ListDto> = ({ data, isVisible }) => {
+export const Slider:FC<ListDto> = ({ data, toggleVisible }) => {
     const [indexElement, setIndexElement] = useState<number>(0);
 
     const lastIndexElement: number = data && data.length - 1 || 0;
@@ -30,9 +31,7 @@ export const Slider:FC<ListDto> = ({ data, isVisible }) => {
       let isToFirst:boolean = counter < 0;
 
       setIndexElement(isToFirst ? lastIndexElement : counter);
-    }
-
-    console.log(isVisible, 'in slider');
+    } 
 
     return (
       <div className="slider">
@@ -42,18 +41,21 @@ export const Slider:FC<ListDto> = ({ data, isVisible }) => {
               key={item._id}
               className={indexElement === i ? 'slider__item' : 'hide'}
             >
-              <p className="slider__text">{ item.word }</p>
+              <p className={toggleVisible.word ? 'slider__text' : 'slider__text is-hide'}>
+                  { item.word }
+                </p>
 
               <span className="slider__text slider__text--transcription">
                 [ {item.transcription || ' - '} ]
               </span>
 
-              {
-                isVisible &&
-                  <p className="slider__text slider__text--translate">
-                      { item.translate }
-                  </p> 
-              }
+              <p className={
+                  toggleVisible.translate ?
+                    'slider__text slider__text--translate' :
+                    'slider__text slider__text--translate is-hide'
+                  }>
+                    { item.translate }
+                </p> 
 
               <div className="slider__action">
                 <DeleteWord itemId={item._id} />

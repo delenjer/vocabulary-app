@@ -33,6 +33,10 @@
         &--transcription {
             font-size: 18px;
         }
+
+        &.is-hide {
+          visibility: hidden;
+        }
     }
 
     &__control {

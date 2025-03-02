@@ -3,3 +3,9 @@
     background-color: initial;
     cursor: pointer;
   }
+
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

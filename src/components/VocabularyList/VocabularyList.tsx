@@ -24,8 +24,16 @@ type DataDto = {
   list: VocabularyItem[],
 }
 
+export type toggleVisibleType = {
+  word: boolean;
+  translate: boolean;
+}
+
 export const VocabularyList = () => {
-  const [ isVisible, setVisible ] = useState(true);
+  const [ toggleVisible, setToggleVisible ] = useState<toggleVisibleType>({
+    word: true,
+    translate: true,
+  });
   const [ open, setOpen ] = useState(false);
   const [checked, setChecked] = useState<boolean>(true);
 
@@ -45,8 +53,6 @@ export const VocabularyList = () => {
     return data?.list?.find(word => existWordId?.includes(word._id))
   }, [data?.list, existWordId]);
 
-  console.log(isVisible, 'in list');
-
   return (
     <>
       {
@@ -58,22 +64,50 @@ export const VocabularyList = () => {
                 <div className="button-container">
                   <input checked={checked} type="checkbox" onChange={() => setChecked(!checked)} />
 
+                  <span className='toggle-control'>
                   <button
-                    type="button"
-                    onClick={() => setVisible(!isVisible)}
-                    className="button-visible-col"
-                    title="Show/Hide translate column"
-                  >
-                    <Image
-                      src={isVisible ? showImg.src : hideImg.src}
-                      alt="Image"
-                      width={28}
-                      height={28}
-                    />
-                  </button>
+                      type="button"
+                      onClick={() => (
+                        setToggleVisible((prevState) => ({
+                          ...prevState,
+                          word: !toggleVisible.word,
+                        }))
+                      )}
+                      className="button-visible-col"
+                      title="Show/Hide Word"
+                    >
+                      <Image
+                        src={toggleVisible.word ? showImg.src : hideImg.src}
+                        alt="Image"
+                        width={28}
+                        height={28}
+                      />
+                    </button>
+
+                    /
+
+                    <button
+                      type="button"
+                      onClick={() => (
+                        setToggleVisible((prevState) => ({
+                          ...prevState,
+                          translate: !prevState.translate,
+                        }))
+                      )}
+                      className="button-visible-col"
+                      title="Show/Hide translate"
+                    >
+                      <Image
+                        src={toggleVisible.translate ? showImg.src : hideImg.src}
+                        alt="Image"
+                        width={28}
+                        height={28}
+                      />
+                    </button>
+                  </span>
                 </div>
 
-                <Slider key={toggleKeyWord} data={data?.list} isVisible={isVisible} />
+                <Slider key={toggleKeyWord} data={data?.list} toggleVisible={toggleVisible} />
               </div>
             </div>
         )
