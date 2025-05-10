@@ -18,6 +18,7 @@ import showImg from '../../../public/images/eye.svg';
 import hideImg from '../../../public/images/eye-crossed.svg';
 import {Spinner} from '@/components/Spinner/Spinner';
 import { Slider } from '../Slider/Slider';
+import { wordsCount } from '@/helper/wordsCount';
 
 
 type DataDto = {
@@ -49,6 +50,8 @@ export const VocabularyList = () => {
     queryFn : () => getVocabularyList(toggleKeyWord),
   });
 
+  const dataSize: number = data?.list.length || 0;
+
   const existWord = useMemo(() => {
     return data?.list?.find(word => existWordId?.includes(word._id))
   }, [data?.list, existWordId]);
@@ -62,6 +65,8 @@ export const VocabularyList = () => {
             <div className="container">
               <div className="container-wrap">
                 <div className="button-container">
+                  <strong>{wordsCount(dataSize)}</strong>
+
                   <input checked={checked} type="checkbox" onChange={() => setChecked(!checked)} />
 
                   <span className='toggle-control'>

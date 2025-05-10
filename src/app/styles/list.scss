@@ -52,8 +52,8 @@
 }
 
 .button-container {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 20px 83px;
+  grid-gap: 10px;
 }
 

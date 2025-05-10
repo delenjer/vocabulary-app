@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
 
     await connectMongoDB();
+
     await Vocabulary.create({ ...data });
 
     return NextResponse.json({ message: "User registered." }, { status: 201 });
@@ -40,17 +41,17 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
 
-  const { searchParams } = new URL(req.url);
-  const word = searchParams.get('word');
-  const getDataParams = word === 'new' ?
-  filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
-  filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
+  // const { searchParams } = new URL(req.url);
+  // const word = searchParams.get('word');
+  // const getDataParams = word === 'new' ?
+  // filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
+  // filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
 
-  await connectMongoDB();
+  // await connectMongoDB();
 
-  const list = await getDataParams;
+  // const list = await getDataParams;
 
-  // const list = await Vocabulary.find().sort({ updatedAt: -1 });
+  const list = await Vocabulary.find().sort({ updatedAt: -1 });
 
   return NextResponse.json({ list });
 }
