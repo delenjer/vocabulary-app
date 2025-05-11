@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
 
   // const { searchParams } = new URL(req.url);
   // const word = searchParams.get('word');
@@ -47,9 +47,9 @@ export async function GET(req: NextRequest) {
   // filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
   // filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
 
-  // await connectMongoDB();
-
   // const list = await getDataParams;
+
+  await connectMongoDB();
 
   const list = await Vocabulary.find().sort({ updatedAt: -1 });
 

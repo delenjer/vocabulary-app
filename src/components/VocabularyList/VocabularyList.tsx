@@ -46,11 +46,11 @@ export const VocabularyList = () => {
   }, [existWordId]);
 
   const { data, isLoading } = useQuery<DataDto>({
-    queryKey: ['words', toggleKeyWord],
-    queryFn : () => getVocabularyList(toggleKeyWord),
+    queryKey: ['words'],
+    queryFn : getVocabularyList,
   });
 
-  const dataSize: number = data?.list.length || 0;
+  const dataSize: number = data?.list?.length || 0;
 
   const existWord = useMemo(() => {
     return data?.list?.find(word => existWordId?.includes(word._id))

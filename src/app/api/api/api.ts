@@ -11,9 +11,13 @@ export const addWord = async (data:WordsDto) => {
   });
 }
 
-export const getVocabularyList = async (word: string) => {
+export const getVocabularyList = async () => {
   try {
-    const res = await fetch(`/api/vocabularyList?word=${word}`, {
+    const res = await fetch(`/api/vocabularyList`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
         cache: "no-store",
       }
     );

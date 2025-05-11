@@ -69,8 +69,6 @@ export const Form = () => {
 
 
     if (data.wordField && data.translateField) {
-        console.log(newData, 'newData')
-
       mutation.mutate(newData);
     }
 
