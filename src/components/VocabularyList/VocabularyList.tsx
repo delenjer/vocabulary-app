@@ -19,6 +19,7 @@ import hideImg from '../../../public/images/eye-crossed.svg';
 import {Spinner} from '@/components/Spinner/Spinner';
 import { Slider } from '../Slider/Slider';
 import { wordsCount } from '@/helper/wordsCount';
+import { ListControll } from '../ListControll/ListControll';
 
 
 type DataDto = {
@@ -36,18 +37,19 @@ export const VocabularyList = () => {
     translate: true,
   });
   const [ open, setOpen ] = useState(false);
-  const [checked, setChecked] = useState<boolean>(true);
+  const [updateDataKey, setUpdateDataKey] = useState<string>('new');
 
   const existWordId = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
-  let toggleKeyWord = checked ? 'new' : 'all';
 
   useEffect(() => {
     setOpen(!!existWordId);
   }, [existWordId]);
 
+  console.log(updateDataKey);
+
   const { data, isLoading } = useQuery<DataDto>({
-    queryKey: ['words'],
-    queryFn : getVocabularyList,
+    queryKey: ['words', updateDataKey],
+    queryFn : () => getVocabularyList(updateDataKey),
   });
 
   const dataSize: number = data?.list?.length || 0;
@@ -62,12 +64,13 @@ export const VocabularyList = () => {
         isLoading ? (
             <Spinner />
           ) : (
-            <div className="container">
+            <>
+            <ListControll action={setUpdateDataKey} />
+
+            <div className="container">              
               <div className="container-wrap">
                 <div className="button-container">
                   <strong>{wordsCount(dataSize)}</strong>
-
-                  <input checked={checked} type="checkbox" onChange={() => setChecked(!checked)} />
 
                   <span className='toggle-control'>
                   <button
@@ -112,9 +115,10 @@ export const VocabularyList = () => {
                   </span>
                 </div>
 
-                <Slider key={toggleKeyWord} data={data?.list} toggleVisible={toggleVisible} />
+                <Slider data={data?.list} toggleVisible={toggleVisible} />
               </div>
             </div>
+            </>
         )
       }
 

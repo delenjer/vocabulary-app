@@ -2,6 +2,7 @@ import { SortOrder } from 'mongoose';
 import {NextRequest, NextResponse} from 'next/server';
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
+import NewWords from '@/utils/newWordsSchema/newWordsSchema';
 
 export interface IVocabulary extends Document {
   word: string;
@@ -27,7 +28,9 @@ export async function POST(req: NextRequest) {
 
     await connectMongoDB();
 
-    await Vocabulary.create({ ...data });
+    // await Vocabulary.create({ ...data });
+
+     await NewWords.create({ ...data });
 
     return NextResponse.json({ message: "User registered." }, { status: 201 });
 
@@ -39,10 +42,13 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
 
-  // const { searchParams } = new URL(req.url);
-  // const word = searchParams.get('word');
+  const { searchParams } = new URL(req.url);
+  const param = searchParams.get('key');
+
+  console.log(param);
+
   // const getDataParams = word === 'new' ?
   // filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
   // filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });

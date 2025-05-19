@@ -11,9 +11,12 @@ export const addWord = async (data:WordsDto) => {
   });
 }
 
-export const getVocabularyList = async () => {
+export const getVocabularyList = async (key: string) => {
   try {
-    const res = await fetch(`/api/vocabularyList`, {
+
+    console.log(key, 'key');
+
+    const res = await fetch(`/api/vocabularyList?=${key}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

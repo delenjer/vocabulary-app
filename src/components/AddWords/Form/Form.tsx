@@ -7,7 +7,6 @@ import {Input} from '@/components/Input/Input';
 import {Textarea} from '@/components/Textarea/Textarea';
 import {Button} from '@/components/Button/Button';
 import {FormValues, WordsDto} from '@/models/models';
-import {UseMutateFunction} from '@tanstack/react-query';
 import {researchWord} from '@/app/api/api/api';
 import {existWordState} from '@/utils/storageStore/storageStore';
 import {schema} from '@/components/AddWords/Form/validationShema';
@@ -17,7 +16,6 @@ import {
 } from '@tanstack/react-query';
 
 import {addWord} from '@/app/api/api/api';
-import { log } from 'console';
 
 type FormData = {
   wordField: string,
