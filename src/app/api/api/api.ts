@@ -13,14 +13,7 @@ export const addWord = async (data:WordsDto) => {
 
 export const getVocabularyList = async (key: string) => {
   try {
-
-    console.log(key, 'key');
-
-    const res = await fetch(`/api/vocabularyList?=${key}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const res = await fetch(`/api/vocabularyList?word=${key}`, {
         cache: "no-store",
       }
     );
@@ -46,13 +39,17 @@ export const researchWord = ({ word }:Pick<WordsDto, 'word'>) => {
   }).then(res => res.json());
 }
 
-export const deleteWord = (id: { _id: string }) => {
-  return fetch("/api/delete-word", {
+export const deleteWord = (param: { _id: string, listKey: string }) => {
+
+  console.log(param, 'param');
+
+
+  return fetch(`/api/delete-word`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(param),
   }).then(res => res.json());
 }
 

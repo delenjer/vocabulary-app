@@ -8,9 +8,10 @@ import { toggleVisibleType } from "../VocabularyList/VocabularyList";
 type ListDto = {
   data?: VocabularyItem[],
   toggleVisible: toggleVisibleType,
+  listKey: string;
 }
 
-export const Slider:FC<ListDto> = ({ data, toggleVisible }) => {
+export const Slider:FC<ListDto> = ({ data, toggleVisible, listKey }) => {
     const [indexElement, setIndexElement] = useState<number>(0);
 
     const lastIndexElement: number = data && data.length - 1 || 0;
@@ -58,7 +59,7 @@ export const Slider:FC<ListDto> = ({ data, toggleVisible }) => {
                 </p> 
 
               <div className="slider__action">
-                <DeleteWord itemId={item._id} />
+                <DeleteWord itemId={item._id} listKey={listKey} />
               </div>
 
               <SliderControl

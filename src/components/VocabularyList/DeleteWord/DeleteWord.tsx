@@ -7,18 +7,19 @@ import {deleteWord} from '@/app/api/api/api';
 
 type DeleteListItemProps = {
   itemId: string,
+  listKey: string,
 }
 
-export const DeleteWord:FC<DeleteListItemProps> = memo(({ itemId }) => {
+export const DeleteWord:FC<DeleteListItemProps> = memo(({ itemId, listKey }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (id: { _id: string }) => deleteWord(id),
+    mutationFn: (id: { _id: string, listKey: string }) => deleteWord(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['words'] }),
   });
 
   const handleClick = (id:string) => {
-    mutation.mutate({ _id: id });
+    mutation.mutate({ _id: id, listKey: listKey });
   }
 
   return (

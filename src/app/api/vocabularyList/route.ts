@@ -45,19 +45,15 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
-  const param = searchParams.get('key');
-
-  console.log(param);
-
-  // const getDataParams = word === 'new' ?
-  // filterData(Vocabulary, { lable: 'new' }, { updatedAt: -1 }) :
-  // filterData(Vocabulary, {lable: { $ne: 'new' }}, { updatedAt: -1 });
-
-  // const list = await getDataParams;
+  const param = searchParams.get('word');
 
   await connectMongoDB();
 
-  const list = await Vocabulary.find().sort({ updatedAt: -1 });
+  const list = param === 'new' ? 
+    await NewWords.find().sort({ updatedAt: -1 }) :
+    await Vocabulary.find().sort({ updatedAt: -1 });
+
+  // const list = await Vocabulary.find().sort({ updatedAt: -1 });
 
   return NextResponse.json({ list });
 }

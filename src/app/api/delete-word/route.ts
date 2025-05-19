@@ -2,13 +2,14 @@ import {NextRequest, NextResponse} from 'next/server';
 
 import {connectMongoDB} from '@/lib/mongodb';
 import Vocabulary from '@/utils/vocabularySchema/vocabularySchema';
+import NewWords from '@/utils/newWordsSchema/newWordsSchema';
 
 export async function DELETE(req:NextRequest) {
   try {
-    const id = await req.json();
+    const { _id, listKey } = await req.json();
 
     await connectMongoDB();
-    await Vocabulary.deleteOne(id);
+    listKey === 'new' ? await NewWords.deleteOne({_id}) : await Vocabulary.deleteOne({_id});
 
     return NextResponse.json({ message: "Item in list is delete." }, { status: 201 });
   } catch (error) {

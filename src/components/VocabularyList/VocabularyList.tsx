@@ -45,8 +45,6 @@ export const VocabularyList = () => {
     setOpen(!!existWordId);
   }, [existWordId]);
 
-  console.log(updateDataKey);
-
   const { data, isLoading } = useQuery<DataDto>({
     queryKey: ['words', updateDataKey],
     queryFn : () => getVocabularyList(updateDataKey),
@@ -115,7 +113,12 @@ export const VocabularyList = () => {
                   </span>
                 </div>
 
-                <Slider data={data?.list} toggleVisible={toggleVisible} />
+                <Slider
+                  data={data?.list}
+                  toggleVisible={toggleVisible}
+                  listKey={updateDataKey}
+                  key={updateDataKey}
+                />
               </div>
             </div>
             </>
